@@ -1,4 +1,7 @@
 export default function ArticleCard({article}){
+    const articleCreatedAt = article.created_at;
+    const articleDate = articleCreatedAt.slice(0,10)
+
     return (
         <div className="article">
             <div className="article-img">
@@ -13,7 +16,7 @@ export default function ArticleCard({article}){
             </div>
             <div className="article-side">
                 <div className="article-stats">Votes: {article.votes} Comments: {article.comment_count}</div>
-                <div className="article-date">Article Date: {article.created_at}</div>
+                <div className="article-date">Article Date: {articleDate}</div>
                 <button type="submit">View Article</button>
             </div>
         </div>

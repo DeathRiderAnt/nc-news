@@ -64,6 +64,6 @@ li {
   list-style-type: none;
 }
 
-img {
-  width: 20vw;;
+ol {
+  padding-inline-start: unset;
 }

@@ -1,7 +1,6 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
   text-align: center;
 }
 
@@ -25,4 +24,12 @@
 .article-main li > div {
   flex: 1;
   padding: 0.5rem;
+}
+
+.article-stats {
+  word-spacing: 0.5rem;
+}
+
+img {
+  width: 20vw;;
 }
