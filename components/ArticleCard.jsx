@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function ArticleCard({article}){
     const articleCreatedAt = article.created_at;
     const articleDate = articleCreatedAt.slice(0,10)
@@ -17,7 +19,7 @@ export default function ArticleCard({article}){
             <div className="article-side">
                 <div className="article-stats">Votes: {article.votes} Comments: {article.comment_count}</div>
                 <div className="article-date">Article Date: {articleDate}</div>
-                <button type="submit">View Article</button>
+                <nav><Link to={`articles/${article.article_id}`}>View Article</Link></nav>
             </div>
         </div>
     )

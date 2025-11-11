@@ -67,3 +67,7 @@ li {
 ol {
   padding-inline-start: unset;
 }
+
+pre {
+  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+}

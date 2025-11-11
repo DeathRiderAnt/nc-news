@@ -33,3 +33,20 @@
 img {
   width: 20vw;;
 }
+
+.comment{
+  display: flex;
+  justify-content: space-between;
+  padding: 2rem;
+}
+
+.comment-side {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 20vw;
+}
+
+.comment-body {
+  width: 70vw;
+}

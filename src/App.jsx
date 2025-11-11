@@ -1,32 +1,18 @@
-import { useState, useEffect } from 'react'
 import './App.css'
-import { getArticles } from '../fetch'
-import ArticleCard from '../components/ArticleCard'
+import Header from '../components/Header'
+import MainPage from '../components/MainPage'
+import SingleArticle from '../components/SingleArticle'
+import { Routes, Route } from 'react-router-dom'
 
 function App() {
-  const [articles, setArticles] = useState([])
-
-  useEffect(() => {
-    getArticles()
-    .then(({articles})=> {
-        setArticles(articles)
-    })
-    .catch((err) => console.error("Fetch error:", err))
-  }, [])
-
-  console.log(articles)
-
   return (
     <>
-      <header>
-        <h1>NC News</h1>
-      </header>
+      <Header />
       <section>
-        <ol id='article-list'>
-          {articles.map((article) => {
-            return <ArticleCard key={article.id} article={article} />
-          })}
-        </ol>
+        <Routes>
+          <Route path='/' element={<MainPage />}/>
+          <Route path='/articles/:article_id' element={<SingleArticle />}/>
+        </Routes>
       </section>
     </>
   )
