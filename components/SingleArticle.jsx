@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import '../src/Article.css'
-import { getArticleById, getCommentsByArticle } from '../fetch'
+import { getArticleById, getCommentsByArticle, updateArticleVotes } from '../fetch'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import CommentCard from './CommentCard'
@@ -10,6 +10,8 @@ export default function SingleArticle(){
     const [isLoading, setIsLoading] = useState(true)
     const {article_id} = useParams()
     const [comments, setComments] = useState([])
+    const [voteCount, setVoteCount] = useState(0)
+    const [voteState, setVoteState] = useState("not-voted")
     
 
     useEffect(() => {
@@ -17,6 +19,7 @@ export default function SingleArticle(){
         getArticleById(article_id)
         .then(({article}) => {
             setArticle(article)
+            setVoteCount(article.votes)
             setIsLoading(false)
         })
         
@@ -33,9 +36,22 @@ export default function SingleArticle(){
         const loadMessage = <p>Loading Article...</p>
         return loadMessage
     }
-    
+
     const articleCreatedAt = article.created_at;
     const articleDate = articleCreatedAt.slice(0,10)
+
+    function handleClick(voteDir){
+        const increment = voteDir === "up" ? 1 : -1;
+        if (voteDir === "up")
+            setVoteState(voteState === "not-voted" ? "up-voted" : "not-voted")
+        else
+            setVoteState(voteState === "not-voted" ? "down-voted" : "not-voted")  
+
+        setVoteCount((currCount) => currCount + increment)
+
+        updateArticleVotes(article.article_id,increment)
+    }
+
 
     return(
         <>
@@ -56,7 +72,11 @@ export default function SingleArticle(){
                     <p>{article.body}</p>
                 </div>
                 <div>
-                    <pre>Votes: {article.votes}     Comments: {article.comment_count}</pre>
+                    <pre><button 
+                    disabled={voteState === "down-voted"}
+                    onClick={() => handleClick("down")}>DownVote!</button>     Votes: {voteCount}      <button 
+                    disabled={voteState === "up-voted"}
+                    onClick={() => handleClick("up")}>UpVote!</button>    Comments: {article.comment_count}</pre>
                 </div>
             </section>
             <section>

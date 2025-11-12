@@ -18,3 +18,17 @@ export function getCommentsByArticle(id) {
         return res.json();
     })
 }
+
+export function updateArticleVotes(id,vote){
+    return fetch(`https://nc-news-l6nr.onrender.com/api/articles/${id}`, {
+        method: "PATCH",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({inc_votes: vote})
+    })
+    .then((res) => {
+        return res.json();
+    })
+    .catch((err) => {
+        console.error("Fetch error: ",err)
+    })
+}
