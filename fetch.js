@@ -32,3 +32,17 @@ export function updateArticleVotes(id,vote){
         console.error("Fetch error: ",err)
     })
 }
+
+export function postComment(id,comment) {
+    return fetch(`https://nc-news-l6nr.onrender.com/api/articles/${id}/comments`, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(comment)
+    })
+    .then((res) => {
+        return res.json();
+    })
+    .catch((err) => {
+        console.error("Fetch error: ",err)
+    })
+}
