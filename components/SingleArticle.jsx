@@ -13,8 +13,8 @@ export default function SingleArticle(){
     const [voteCount, setVoteCount] = useState(0)
     const [voteState, setVoteState] = useState("not-voted")
     const [showForm, setShowForm] = useState(false)
-    const user = "NooYooser"
-    const [commentData, setCommentData] = useState({author:{user}, body:""})
+    const user = "grumpy19"
+    const [commentData, setCommentData] = useState({author:user, body:""})
     
 
     useEffect(() => {
@@ -64,8 +64,11 @@ export default function SingleArticle(){
         e.preventDefault();
         console.log("Form submitted: ", commentData)
         postComment(article.article_id,commentData)
+        .then((res) => {
+            setComments(prevComments => [res, ...prevComments])
+        })
         setShowForm(false)
-        setCommentData({author:{user}, body:""})
+        setCommentData({author:user, body:""})
     }
 
 
@@ -99,7 +102,7 @@ export default function SingleArticle(){
 
             {showForm && (
                 <div className='overlay'>
-                    <div className='popup'>
+                    <div className='popup' onSubmit={handleSubmit}>
                         <h3>Please leave a Comment, {user}</h3>
                         <form action="">
                             <textarea 
