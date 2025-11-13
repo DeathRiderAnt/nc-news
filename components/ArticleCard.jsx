@@ -19,7 +19,7 @@ export default function ArticleCard({article}){
             <div className="article-side">
                 <div className="article-stats">Votes: {article.votes} Comments: {article.comment_count}</div>
                 <div className="article-date">Article Date: {articleDate}</div>
-                <nav><Link to={`articles/${article.article_id}`}>View Article</Link></nav>
+                <nav><Link to={`/articles/${article.article_id}`}>View Article</Link></nav>
             </div>
         </div>
     )

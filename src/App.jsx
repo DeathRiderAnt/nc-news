@@ -13,6 +13,7 @@ function App() {
       <section>
         <Routes>
           <Route path='/' element={<MainPage user={user}/>}/>
+          <Route path='/topics/:topic' element={<MainPage user={user}/>}/>
           <Route path='/articles/:article_id' element={<SingleArticle user={user}/>}/>
         </Routes>
       </section>

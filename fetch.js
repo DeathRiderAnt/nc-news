@@ -1,5 +1,8 @@
-export function getArticles() {
-    return fetch('https://nc-news-l6nr.onrender.com/api/articles')
+export function getArticles(topic) {
+    let url = 'https://nc-news-l6nr.onrender.com/api/articles';
+    if (topic) url += `?topic=${topic}`
+
+    return fetch(url)
     .then((res) => {
         return res.json();
     })
