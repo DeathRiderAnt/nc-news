@@ -46,3 +46,16 @@ export function postComment(id,comment) {
         console.error("Fetch error: ",err)
     })
 }
+
+export function deleteComment(id){
+    return fetch(`https://nc-news-l6nr.onrender.com/api/comments/${id}`, {
+        method: "DELETE"
+    })
+    .then((res) => {
+        if (!res.ok) throw new Error ("Failed to delete comment!")
+    })
+    .catch((err) => {
+        console.error("Fetch error: ",err)
+        throw err;
+    })
+}

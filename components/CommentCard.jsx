@@ -1,6 +1,14 @@
-export default function CommentCard({comment}) {
+import { useState } from "react";
+
+export default function CommentCard({comment, user, onDelete}) {
     const commentCreatedAt = comment.created_at;
-    const commentDate = commentCreatedAt.slice(0,10)
+    const commentDate = commentCreatedAt.slice(0,10);
+    const [isDeleting, setIsDeleting] = useState(false);
+
+    function handleDelete(){
+        setIsDeleting(true)
+        onDelete(comment.comment_id)
+    }
 
     return(
         <>
@@ -12,6 +20,10 @@ export default function CommentCard({comment}) {
                 </div>           
                 <div className="comment-body">
                     {comment.body}
+                    <div>
+                    <button disabled={user !== comment.author || isDeleting}
+                    onClick={handleDelete}>Delete Comment</button>
+                    </div>
                 </div>
             </div>    
         </>

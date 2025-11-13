@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react'
 import '../src/Article.css'
-import { getArticleById, getCommentsByArticle, updateArticleVotes, postComment } from '../fetch'
+import { getArticleById, getCommentsByArticle, updateArticleVotes, postComment, deleteComment } from '../fetch'
 import { useParams } from 'react-router-dom'
 import { Link } from 'react-router-dom'
 import CommentCard from './CommentCard'
 
-export default function SingleArticle(){
+export default function SingleArticle({user}){
     const [article, setArticle] = useState(null)
     const [isLoading, setIsLoading] = useState(true)
     const {article_id} = useParams()
     const [comments, setComments] = useState([])
+    const [commentCount, setCommentCount] = useState(0)
     const [voteCount, setVoteCount] = useState(0)
     const [voteState, setVoteState] = useState("not-voted")
     const [showForm, setShowForm] = useState(false)
-    const user = "grumpy19"
     const [commentData, setCommentData] = useState({author:user, body:""})
+    const [deleteMessage, setDeleteMessage] = useState("");
     
 
     useEffect(() => {
@@ -23,6 +24,7 @@ export default function SingleArticle(){
         .then(({article}) => {
             setArticle(article)
             setVoteCount(article.votes)
+            setCommentCount(article.comment_count)
             setIsLoading(false)
         })
         
@@ -66,9 +68,20 @@ export default function SingleArticle(){
         postComment(article.article_id,commentData)
         .then((res) => {
             setComments(prevComments => [res, ...prevComments])
+            setCommentCount(currCount => currCount + 1)
         })
         setShowForm(false)
         setCommentData({author:user, body:""})
+    }
+
+    function handleDeleteComment(commentId){
+        return deleteComment(commentId)
+        .then(() => {
+            setComments(prev => prev.filter(c => c.comment_id !== commentId))
+            setCommentCount(currCount => currCount - 1)
+            setDeleteMessage("Comment Deleted!")
+            setTimeout(() => {setDeleteMessage("")}, 1000)
+        })
     }
 
 
@@ -95,7 +108,7 @@ export default function SingleArticle(){
                     disabled={voteState === "down-voted"}
                     onClick={() => handleVote("down")}>DownVote!</button>     Votes: {voteCount}      <button 
                     disabled={voteState === "up-voted"}
-                    onClick={() => handleVote("up")}>UpVote!</button>    Comments: {article.comment_count}</pre>
+                    onClick={() => handleVote("up")}>UpVote!</button>    Comments: {commentCount}</pre>
                 </div>
                 <div><button onClick={() => setShowForm(true)}>Add a Comment!</button></div>
             </section>
@@ -120,9 +133,10 @@ export default function SingleArticle(){
             )}
 
             <section>
+                {deleteMessage && <p>{deleteMessage}</p>}
                 <ol id='comment-list'>
                     {comments.map((comment) => {
-                                return <CommentCard key={comment.id} comment={comment} />
+                                return <CommentCard key={comment.comment_id} comment={comment} user={user} onDelete={handleDeleteComment}/>
                               })}
                 </ol>
             </section>

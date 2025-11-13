@@ -5,13 +5,15 @@ import SingleArticle from '../components/SingleArticle'
 import { Routes, Route } from 'react-router-dom'
 
 function App() {
+  const user = 'grumpy19';
+
   return (
     <>
-      <Header />
+      <Header user={user}/>
       <section>
         <Routes>
-          <Route path='/' element={<MainPage />}/>
-          <Route path='/articles/:article_id' element={<SingleArticle />}/>
+          <Route path='/' element={<MainPage user={user}/>}/>
+          <Route path='/articles/:article_id' element={<SingleArticle user={user}/>}/>
         </Routes>
       </section>
     </>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getArticles } from '../fetch'
 import ArticleCard from './ArticleCard'
 
-export default function MainPage() {
+export default function MainPage({user}) {
   const [articles, setArticles] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
