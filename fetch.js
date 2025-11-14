@@ -9,6 +9,12 @@ export function getArticles(topic, {sort_by = "created_at", order = "desc"} = {}
     
     return fetch(url)
     .then((res) => {
+        if (!res.ok){
+            return res.json().then(() => {
+                throw new Error("Failed to fetch Articles")
+            })
+        }
+
         return res.json();
     })
 }
@@ -16,16 +22,25 @@ export function getArticles(topic, {sort_by = "created_at", order = "desc"} = {}
 export function getArticleById(id) {
     return fetch(`https://nc-news-l6nr.onrender.com/api/articles/${id}`)
     .then((res) => {
+        if(!res.ok){
+            return res.json().then(() => {
+                throw new Error("Error: No such article exists yet!")
+            })
+        }
+
         return res.json();
-    })
-    .catch((err) => {
-        console.error("Fetch error: ",err)
     })
 }
 
 export function getCommentsByArticle(id) {
     return fetch(`https://nc-news-l6nr.onrender.com/api/articles/${id}/comments`)
     .then((res) => {
+        if(!res.ok){
+            return res.json().then(() => {
+                throw new Error("Failed to get Comments")
+            })
+        }
+        
         return res.json();
     })
 }
@@ -37,10 +52,13 @@ export function updateArticleVotes(id,vote){
         body: JSON.stringify({inc_votes: vote})
     })
     .then((res) => {
+        if(!res.ok){
+            return res.json().then(() => {
+                throw new Error("Failed to update Votes")
+            })
+        }
+
         return res.json();
-    })
-    .catch((err) => {
-        console.error("Fetch error: ",err)
     })
 }
 
@@ -51,10 +69,13 @@ export function postComment(id,comment) {
         body: JSON.stringify(comment)
     })
     .then((res) => {
+        if(!res.ok){
+            return res.json().then(() => {
+                throw new Error("Failed to post Comment")
+            })
+        }
+
         return res.json();
-    })
-    .catch((err) => {
-        console.error("Fetch error: ",err)
     })
 }
 
@@ -63,10 +84,10 @@ export function deleteComment(id){
         method: "DELETE"
     })
     .then((res) => {
-        if (!res.ok) throw new Error ("Failed to delete comment!")
-    })
-    .catch((err) => {
-        console.error("Fetch error: ",err)
-        throw err;
+        if(!res.ok){
+            return res.json().then(() => {
+                throw new Error("Failed to delete Comment")
+            })
+        }
     })
 }
