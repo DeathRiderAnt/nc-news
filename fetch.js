@@ -18,6 +18,9 @@ export function getArticleById(id) {
     .then((res) => {
         return res.json();
     })
+    .catch((err) => {
+        console.error("Fetch error: ",err)
+    })
 }
 
 export function getCommentsByArticle(id) {
