@@ -50,3 +50,8 @@ img {
 .comment-body {
   width: 70vw;
 }
+
+.filters {
+  display: flex;
+  justify-content: space-evenly;
+}

@@ -1,7 +1,12 @@
-export function getArticles(topic) {
-    let url = 'https://nc-news-l6nr.onrender.com/api/articles';
-    if (topic) url += `?topic=${topic}`
+export function getArticles(topic, {sort_by = "created_at", order = "desc"} = {}) {
+    const params = new URLSearchParams();
 
+    if(topic) params.append("topic",topic)
+    if(sort_by) params.append("sort_by",sort_by)
+    if(order) params.append("order",order)
+
+    const url = `https://nc-news-l6nr.onrender.com/api/articles?${params.toString()}`;
+    
     return fetch(url)
     .then((res) => {
         return res.json();
