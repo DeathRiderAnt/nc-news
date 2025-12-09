@@ -21,8 +21,8 @@ export default function CommentCard({comment, user, onDelete}) {
                 <div className="comment-body">
                     {comment.body}
                     <div>
-                    <button disabled={user !== comment.author || isDeleting}
-                    onClick={handleDelete}>Delete Comment</button>
+                    {user === comment.author && <button disabled={isDeleting}
+                    onClick={handleDelete}>Delete Comment</button>}
                     </div>
                 </div>
             </div>    

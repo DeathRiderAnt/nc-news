@@ -11,14 +11,14 @@ export default function ArticleCard({article}){
             </div>
             <div className="article-main">
                 <li className="article-main-list">
-                    <div>Title: {article.title}</div>
-                    <div>Author: {article.author}</div>
-                    <div>Topic: {article.topic}</div>
+                    <div>{article.title}</div>
+                    <div>by {article.author}</div>
+                    <div>Talking about {article.topic}</div>
                 </li>
             </div>
             <div className="article-side">
-                <div className="article-stats">Votes: {article.votes} Comments: {article.comment_count}</div>
-                <div className="article-date">Article Date: {articleDate}</div>
+                <div className="article-stats">{article.votes} votes {article.comment_count} comments</div>
+                <div className="article-date">Created on {articleDate}</div>
                 <nav><Link to={`/articles/${article.article_id}`}>View Article</Link></nav>
             </div>
         </div>

@@ -104,17 +104,17 @@ export default function SingleArticle({ user }) {
         <div>
           <p>{article.body}</p>
         </div>
-        <div>
-          <pre>
+        <div className="article-voting">
+          
             <button disabled={voteState === "down-voted"} onClick={() => handleVote("down")}>
               DownVote!
             </button>{" "}
-            Votes: {voteCount}{" "}
+            <p>{voteCount}{" "} votes</p>
             <button disabled={voteState === "up-voted"} onClick={() => handleVote("up")}>
               UpVote!
             </button>{" "}
-            Comments: {commentCount}
-          </pre>
+            <p>{commentCount} comments</p>
+          
         </div>
         <div>
           <button onClick={() => setShowForm(true)}>Add a Comment!</button>
